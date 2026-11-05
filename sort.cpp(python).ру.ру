@@ -1,0 +1,24 @@
+def bubble_sort(arr):
+    n = len(arr)
+    # Проходим по всем элементам массива
+    for i in range(n):
+        # Флаг для оптимизации: если обменов не было, массив уже отсортирован
+        swapped = False
+        # Последние i элементов уже на своих местах
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                # Меняем местами
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        # Если обменов не было — выходим
+        if not swapped:
+            break
+    return arr
+
+
+# Пример использования
+if __name__ == "__main__":
+    numbers = [64, 34, 25, 12, 22, 11, 90]
+    print("До сортировки: ", numbers)
+    sorted_numbers = bubble_sort(numbers)
+    print("После сортировки:", sorted_numbers)
