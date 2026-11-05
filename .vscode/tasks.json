@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "sort",
+            "type": "shell",
+            "command": "сортировка пузырьком питон",
+            "inAgents": true
+        }
+    ]
+}
