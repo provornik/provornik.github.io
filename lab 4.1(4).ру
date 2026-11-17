@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+// --- ПОДПРОГРАММА (первая подзадача) ---
+// Заменяет элементы < C на C, возвращает число замен
+int replaceLessThan(double arr[], int n, double C) {
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] < C) {
+            arr[i] = C;
+            count++;
+        }
+    }
+    return count;
+}
+
+// Вспомогательная функция ввода (как часто требуют в лабах)
+void inputArray(double arr[], int *n, const char* name) {
+    do {
+        printf("Введите размер массива %s (1-%d): ", name, MAX_SIZE);
+        scanf("%d", n);
+    } while (*n < 1 || *n > MAX_SIZE);
+    
+    printf("Введите элементы массива %s:\n", name);
+    for (int i = 0; i < *n; i++) {
+        scanf("%lf", &arr[i]);
+    }
+}
+
+// Вспомогательная функция вывода
+void printArray(double arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%.1lf ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    double A[MAX_SIZE], B[MAX_SIZE];
+    int nA, nB;
+    
+    // Ввод
+    inputArray(A, &nA, "A");
+    inputArray(B, &nB, "B");
+
+    // --- ПРИМЕНЕНИЕ К РАЗЛИЧНЫМ ОБЪЕКТАМ (вторая подзадача) ---
+    // 1. Для массива A задаем C = -5.7
+    int countA = replaceLessThan(A, nA, -5.7);
+    
+    // 2. Для массива B задаем C = 3.8
+    int countB = replaceLessThan(B, nB, 3.8);
+
+    // Вывод результатов согласно условию
+    printf("\n--- Результаты ---\n");
+    if (countA > countB) {
+        printf("Больше замен в массиве A (%d). Измененный массив:\n", countA);
+        printArray(A, nA);
+    } else if (countB > countA) {
+        printf("Больше замен в массиве B (%d). Измененный массив:\n", countB);
+        printArray(B, nB);
+    } else {
+        printf("Количество замен равно: %d\n", countA);
+    }
+
+    return 0;
+}
