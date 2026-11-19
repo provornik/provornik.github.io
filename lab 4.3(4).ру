@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <float.h>
+
+#define MAX_SIZE 100
+#define NOT_FOUND -1.0
+
+// --- ПОДПРОГРАММА: Обработка массива ---
+// Сумма квадратов элементов, не превышающих X.
+// Возвращает NOT_FOUND, если таких элементов нет.
+double processArray(const double arr[], int n, double X) {
+    double sum = 0.0;
+    int found = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] <= X) {
+            sum += arr[i] * arr[i];
+            found = 1;
+        }
+    }
+
+    if (found == 0) return NOT_FOUND;
+    return sum;
+}
+
+int main() {
+    double A[MAX_SIZE], B[MAX_SIZE], C[MAX_SIZE];
+    int nA, nB, nC;
+    double X;
+
+    // 1. Ввод X
+    printf("Введите заданное число X: ");
+    scanf("%lf", &X);
+
+    // 2. Ввод массива A
+    do {
+        printf("Введите размер массива A (1-%d): ", MAX_SIZE);
+        scanf("%d", &nA);
+    } while (nA < 1 || nA > MAX_SIZE);
+    printf("Введите элементы массива A:\n");
+    for (int i = 0; i < nA; i++) scanf("%lf", &A[i]);
+
+    // 3. Ввод массива B
+    do {
+        printf("Введите размер массива B (1-%d): ", MAX_SIZE);
+        scanf("%d", &nB);
+    } while (nB < 1 || nB > MAX_SIZE);
+    printf("Введите элементы массива B:\n");
+    for (int i = 0; i < nB; i++) scanf("%lf", &B[i]);
+
+    // 4. Ввод массива C
+    do {
+        printf("Введите размер массива C (1-%d): ", MAX_SIZE);
+        scanf("%d", &nC);
+    } while (nC < 1 || nC > MAX_SIZE);
+    printf("Введите элементы массива C:\n");
+    for (int i = 0; i < nC; i++) scanf("%lf", &C[i]);
+
+    // 5. Обработка
+    double resA = processArray(A, nA, X);
+    double resB = processArray(B, nB, X);
+    double resC = processArray(C, nC, X);
+
+    printf("\n--- Результаты ---\n");
+    printf("A: "); if (resA == NOT_FOUND) printf("нет элементов <= %.2lf\n", X); else printf("сумма = %.2lf\n", resA);
+    printf("B: "); if (resB == NOT_FOUND) printf("нет элементов <= %.2lf\n", X); else printf("сумма = %.2lf\n", resB);
+    printf("C: "); if (resC == NOT_FOUND) printf("нет элементов <= %.2lf\n", X); else printf("сумма = %.2lf\n", resC);
+
+    // 6. Поиск минимума
+    double minVal = DBL_MAX;
+    if (resA != NOT_FOUND && resA < minVal) minVal = resA;
+    if (resB != NOT_FOUND && resB < minVal) minVal = resB;
+    if (resC != NOT_FOUND && resC < minVal) minVal = resC;
+
+    if (minVal == DBL_MAX) {
+        printf("Ни в одном массиве нет подходящих элементов.\n");
+        return 0;
+    }
+
+    // 7. Совпадения
+    int countMin = 0;
+    if (resA != NOT_FOUND && resA == minVal) countMin++;
+    if (resB != NOT_FOUND && resB == minVal) countMin++;
+    if (resC != NOT_FOUND && resC == minVal) countMin++;
+
+    if (countMin > 1) {
+        printf("[СОВПАДЕНИЕ] Минимум %.2lf у массивов: ", minVal);
+        if (resA != NOT_FOUND && resA == minVal) printf("A ");
+        if (resB != NOT_FOUND && resB == minVal) printf("B ");
+        if (resC != NOT_FOUND && resC == minVal) printf("C ");
+        printf("\n");
+    } else {
+        if (resA != NOT_FOUND && resA == minVal) {
+            printf("Минимум %.2lf в массиве A:\n", minVal);
+            for (int i = 0; i < nA; i++) printf("%.2lf ", A[i]);
+            printf("\n");
+        } else if (resB != NOT_FOUND && resB == minVal) {
+            printf("Минимум %.2lf в массиве B:\n", minVal);
+            for (int i = 0; i < nB; i++) printf("%.2lf ", B[i]);
+            printf("\n");
+        } else if (resC != NOT_FOUND && resC == minVal) {
+            printf("Минимум %.2lf в массиве C:\n", minVal);
+            for (int i = 0; i < nC; i++) printf("%.2lf ", C[i]);
+            printf("\n");
+        }
+    }
+
+    return 0;
+}

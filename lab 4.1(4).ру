@@ -15,50 +15,50 @@ int replaceLessThan(double arr[], int n, double C) {
     return count;
 }
 
-// Вспомогательная функция ввода (как часто требуют в лабах)
-void inputArray(double arr[], int *n, const char* name) {
-    do {
-        printf("Введите размер массива %s (1-%d): ", name, MAX_SIZE);
-        scanf("%d", n);
-    } while (*n < 1 || *n > MAX_SIZE);
-    
-    printf("Введите элементы массива %s:\n", name);
-    for (int i = 0; i < *n; i++) {
-        scanf("%lf", &arr[i]);
-    }
-}
-
-// Вспомогательная функция вывода
-void printArray(double arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%.1lf ", arr[i]);
-    }
-    printf("\n");
-}
-
 int main() {
     double A[MAX_SIZE], B[MAX_SIZE];
     int nA, nB;
-    
-    // Ввод
-    inputArray(A, &nA, "A");
-    inputArray(B, &nB, "B");
+
+    // --- Ввод массива A ---
+    do {
+        printf("Введите размер массива A (1-%d): ", MAX_SIZE);
+        scanf("%d", &nA);
+    } while (nA < 1 || nA > MAX_SIZE);
+
+    printf("Введите элементы массива A:\n");
+    for (int i = 0; i < nA; i++) {
+        scanf("%lf", &A[i]);
+    }
+
+    // --- Ввод массива B ---
+    do {
+        printf("Введите размер массива B (1-%d): ", MAX_SIZE);
+        scanf("%d", &nB);
+    } while (nB < 1 || nB > MAX_SIZE);
+
+    printf("Введите элементы массива B:\n");
+    for (int i = 0; i < nB; i++) {
+        scanf("%lf", &B[i]);
+    }
 
     // --- ПРИМЕНЕНИЕ К РАЗЛИЧНЫМ ОБЪЕКТАМ (вторая подзадача) ---
-    // 1. Для массива A задаем C = -5.7
     int countA = replaceLessThan(A, nA, -5.7);
-    
-    // 2. Для массива B задаем C = 3.8
     int countB = replaceLessThan(B, nB, 3.8);
 
     // Вывод результатов согласно условию
     printf("\n--- Результаты ---\n");
     if (countA > countB) {
         printf("Больше замен в массиве A (%d). Измененный массив:\n", countA);
-        printArray(A, nA);
+        for (int i = 0; i < nA; i++) {
+            printf("%.1lf ", A[i]);
+        }
+        printf("\n");
     } else if (countB > countA) {
         printf("Больше замен в массиве B (%d). Измененный массив:\n", countB);
-        printArray(B, nB);
+        for (int i = 0; i < nB; i++) {
+            printf("%.1lf ", B[i]);
+        }
+        printf("\n");
     } else {
         printf("Количество замен равно: %d\n", countA);
     }
